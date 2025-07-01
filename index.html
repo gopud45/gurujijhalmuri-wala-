@@ -127,11 +127,29 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Order Placed!</h3>
-            <p class="text-gray-600 mb-6">Thank you for your order from Mandal Jhalmuriwala. Your snacks will be ready soon!</p>
-            <button id="close-confirmation-modal"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-5 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Close
-            </button>
+            <p class="text-gray-600 mb-6">Please scan the QR code or use the UPI ID below to complete your payment.</p>
+            
+            <div class="mb-6">
+                <!-- QR Code Placeholder (In a real app, this would be dynamically generated) -->
+                <img id="upi-qr-code" src="https://placehold.co/200x200/000000/FFFFFF?text=UPI+QR+Code" alt="UPI QR Code" class="mx-auto rounded-lg shadow-md mb-4">
+                
+                <!-- UPI ID -->
+                <p class="text-lg font-semibold text-gray-800 mb-2">UPI ID: <span id="upi-id-display">mandaljhalmuriwala@upi</span></p>
+                
+                <!-- Payment Amount -->
+                <p class="text-xl font-bold text-blue-700">Amount: <span id="payment-amount">₹0.00</span></p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center mt-6 space-y-3 sm:space-y-0 sm:space-x-4">
+                <a id="upi-pay-link" href="#"
+                    class="inline-flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-5 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Pay Now with UPI App
+                </a>
+                <button id="close-confirmation-modal"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2.5 px-5 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
 
@@ -144,7 +162,7 @@
                 { id: 3, name: "Wai Wai Chat", description: "Instant noodles mixed with fresh vegetables and special chat masala.", price: 40, image: "https://placehold.co/150x100/ADD8E6/000000?text=Wai+Wai+Chat" },
                 { id: 4, name: "Aloo Chat", description: "Boiled potato cubes tossed with tangy tamarind chutney and spices.", price: 30, image: "https://placehold.co/150x100/ADD8E6/000000?text=Aloo+Chat" },
                 { id: 5, name: "Lays Chat", description: "Crispy Lays chips mixed with fresh onions, tomatoes, and tangy spices.", price: 40, image: "https://placehold.co/150x100/ADD8E6/000000?text=Lays+Chat" },
-                { id: 6, name: "Bhelpuri Chat", description: "A popular Indian snack made with puffed rice, vegetables, and a tangy tamarind sauce.", price: 40, image: "https://placehold.co/150x100/ADD8E6/000000?text=Bhelpuri+Chat" } // Added Bhelpuri Chat
+                { id: 6, name: "Bhelpuri Chat", description: "A popular Indian snack made with puffed rice, vegetables, and a tangy tamarind sauce.", price: 40, image: "https://placehold.co/150x100/ADD8E6/000000?text=Bhelpuri+Chat" }
             ];
 
             // --- DOM Elements ---
@@ -160,6 +178,12 @@
             const checkoutButton = document.getElementById('checkout-button');
             const orderConfirmationModalOverlay = document.getElementById('order-confirmation-modal-overlay');
             const closeConfirmationModalButton = document.getElementById('close-confirmation-modal');
+
+            // New elements for UPI payment
+            const upiQrCode = document.getElementById('upi-qr-code');
+            const upiIdDisplay = document.getElementById('upi-id-display');
+            const paymentAmount = document.getElementById('payment-amount');
+            const upiPayLink = document.getElementById('upi-pay-link');
 
             // --- Cart State ---
             let cart = []; // Stores objects like { id: 1, name: "Jhalmuri", price: 30, quantity: 1 }
@@ -278,18 +302,40 @@
                 cartModalOverlay.classList.add('hidden');
             });
 
-            // Checkout process
+            // Checkout process - now includes UPI payment details
             checkoutButton.addEventListener('click', () => {
-                // In a real application, you'd send this order to a backend.
-                // For this example, we'll just show a confirmation.
+                const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const upiId = "mandaljhalmuriwala@upi"; // Replace with your actual UPI ID
+                const merchantName = "Mandal Jhalmuriwala";
+                const transactionNote = "Order from Mandal Jhalmuriwala";
+                const transactionRef = "ORDER" + Date.now(); // Simple unique reference
+
+                // Construct UPI deep link
+                const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&tn=${encodeURIComponent(transactionNote)}&am=${totalAmount.toFixed(2)}&cu=INR`;
+
+                // Update UPI details in the confirmation modal
+                upiIdDisplay.textContent = upiId;
+                paymentAmount.textContent = `₹${totalAmount.toFixed(2)}`;
+                upiPayLink.href = upiLink;
+
+                // For QR code: In a real app, you'd use a QR code generation API here.
+                // Example using Google Charts API (Note: This API is deprecated and might not work reliably)
+                // const qrCodeData = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&tn=${encodeURIComponent(transactionNote)}&am=${totalAmount.toFixed(2)}&cu=INR`;
+                // upiQrCode.src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(qrCodeData)}`;
+                // Using a generic placeholder for now to ensure functionality without external dependency
+                upiQrCode.src = `https://placehold.co/200x200/000000/FFFFFF?text=Scan+to+Pay%0A%E2%82%B9${totalAmount.toFixed(2)}`;
+
+
                 cartModalOverlay.classList.add('hidden'); // Hide cart modal
                 orderConfirmationModalOverlay.classList.remove('hidden'); // Show confirmation modal
-                clearCart(); // Clear the cart after placing order
+                // Do NOT clear cart here yet, wait for payment confirmation in a real app
+                // clearCart(); // Uncomment this line if you want to clear cart immediately after showing QR
             });
 
             // Close order confirmation modal
             closeConfirmationModalButton.addEventListener('click', () => {
                 orderConfirmationModalOverlay.classList.add('hidden');
+                clearCart(); // Clear cart when user closes confirmation modal
             });
 
             // Close modals if clicking outside (on the overlay itself)
@@ -302,6 +348,7 @@
             orderConfirmationModalOverlay.addEventListener('click', (event) => {
                 if (event.target === orderConfirmationModalOverlay) {
                     orderConfirmationModalOverlay.classList.add('hidden');
+                    clearCart(); // Clear cart if user closes confirmation modal by clicking outside
                 }
             });
 
