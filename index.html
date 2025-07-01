@@ -324,7 +324,7 @@
                 const transactionRef = "ORDER" + Date.now(); // Simple unique reference
 
                 // Construct UPI deep link
-                const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&tn=${encodeURIComponent(transactionNote)}&am=${totalAmount.toFixed(2)}&cu=INR`;
+                const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&tn=${encodeURIComponent(transactionNote)}%20${transactionRef}&am=${totalAmount.toFixed(2)}&cu=INR`;
 
                 // Update UPI details in the confirmation modal
                 upiIdLink.textContent = upiId; // Update the text content of the link
@@ -364,14 +364,14 @@
             });
 
             // --- Welcome Message Popup Logic ---
-            // Show the welcome message after 10 seconds
+            // Show the welcome message after 3 seconds
             setTimeout(() => {
                 welcomeMessageOverlay.classList.remove('hidden');
-                // Hide the welcome message after 1.5 seconds
+                // Hide the welcome message after 20 seconds
                 setTimeout(() => {
                     welcomeMessageOverlay.classList.add('hidden');
-                }, 1500); // 1.5 seconds
-            }, 10000); // 10 seconds
+                }, 20000); // 20 seconds
+            }, 3000); // 3 seconds
 
             // --- Initial Render ---
             renderMenuItems();
