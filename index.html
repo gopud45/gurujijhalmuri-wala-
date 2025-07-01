@@ -157,12 +157,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             // --- Menu Data ---
             const menuItems = [
-                { id: 1, name: "Jhalmuri", description: "Spicy puffed rice mix with peanuts, onion, and spices.", price: 20, image: "https://placehold.co/150x100/ADD8E6/000000?text=Jhalmuri" },
-                { id: 2, name: "Kurkure Chat", description: "Crushed Kurkure mixed with chopped veggies and tangy sauces.", price: 40, image: "https://placehold.co/150x100/ADD8E6/000000?text=Kurkure+Chat" },
-                { id: 3, name: "Wai Wai Chat", description: "Instant noodles mixed with fresh vegetables and special chat masala.", price: 40, image: "https://placehold.co/150x100/ADD8E6/000000?text=Wai+Wai+Chat" },
-                { id: 4, name: "Aloo Chat", description: "Boiled potato cubes tossed with tangy tamarind chutney and spices.", price: 30, image: "https://placehold.co/150x100/ADD8E6/000000?text=Aloo+Chat" },
-                { id: 5, name: "Lays Chat", description: "Crispy Lays chips mixed with fresh onions, tomatoes, and tangy spices.", price: 40, image: "https://placehold.co/150x100/ADD8E6/000000?text=Lays+Chat" },
-                { id: 6, name: "Bhelpuri Chat", description: "A popular Indian snack made with puffed rice, vegetables, and a tangy tamarind sauce.", price: 40, image: "https://placehold.co/150x100/ADD8E6/000000?text=Bhelpuri+Chat" }
+                { id: 1, name: "Jhalmuri", description: "Spicy puffed rice mix with peanuts, onion, and spices.", price: 20, image: "uploaded:jhalmuri.jpg-8059a93c-eccc-436f-99be-2b17f701eb00" },
+                { id: 2, name: "Kurkure Chat", description: "Crushed Kurkure mixed with chopped veggies and tangy sauces.", price: 40, image: "uploaded:kurkure.jpg-8bff002b-b3ff-4773-aa3a-4ab9620f15ca" },
+                { id: 3, name: "Wai Wai Chat", description: "Instant noodles mixed with fresh vegetables and special chat masala.", price: 40, image: "uploaded:waiwai.jpg-b63a2165-19a2-4056-a09f-42d1b58fca52" },
+                { id: 4, name: "Aloo Chat", description: "Boiled potato cubes tossed with tangy tamarind chutney and spices.", price: 30, image: "uploaded:alo.jpg-4574f5fc-50fc-45ef-afe6-a0e34ac36238" },
+                { id: 5, name: "Lays Chat", description: "Crispy Lays chips mixed with fresh onions, tomatoes, and tangy spices.", price: 40, image: "uploaded:lays.chat.jpg-d2b9d32e-8904-46c5-b76f-421692298b3c" },
+                { id: 6, name: "Bhelpuri Chat", description: "A popular Indian snack made with puffed rice, vegetables, and a tangy tamarind sauce.", price: 40, image: "uploaded:bhelpuri.webp-09e0dd20-88cc-4b5d-87ff-380baf4aab1b" }
             ];
 
             // --- DOM Elements ---
@@ -319,9 +319,6 @@
                 upiPayLink.href = upiLink;
 
                 // For QR code: In a real app, you'd use a QR code generation API here.
-                // Example using Google Charts API (Note: This API is deprecated and might not work reliably)
-                // const qrCodeData = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&tn=${encodeURIComponent(transactionNote)}&am=${totalAmount.toFixed(2)}&cu=INR`;
-                // upiQrCode.src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(qrCodeData)}`;
                 // Using a generic placeholder for now to ensure functionality without external dependency
                 upiQrCode.src = `https://placehold.co/200x200/000000/FFFFFF?text=Scan+to+Pay%0A%E2%82%B9${totalAmount.toFixed(2)}`;
 
