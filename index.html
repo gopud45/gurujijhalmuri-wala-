@@ -133,8 +133,10 @@
                 <!-- QR Code Placeholder (In a real app, this would be dynamically generated) -->
                 <img id="upi-qr-code" src="https://placehold.co/200x200/000000/FFFFFF?text=UPI+QR+Code" alt="UPI QR Code" class="mx-auto rounded-lg shadow-md mb-4">
                 
-                <!-- UPI ID -->
-                <p class="text-lg font-semibold text-gray-800 mb-2">UPI ID: <span id="upi-id-display">mandaljhalmuriwala@upi</span></p>
+                <!-- UPI ID as a clickable link -->
+                <p class="text-lg font-semibold text-gray-800 mb-2">
+                    UPI ID: <a id="upi-id-link" href="#" class="text-blue-600 hover:underline">mandaljhalmuriwala@upi</a>
+                </p>
                 
                 <!-- Payment Amount -->
                 <p class="text-xl font-bold text-blue-700">Amount: <span id="payment-amount">₹0.00</span></p>
@@ -181,7 +183,7 @@
 
             // New elements for UPI payment
             const upiQrCode = document.getElementById('upi-qr-code');
-            const upiIdDisplay = document.getElementById('upi-id-display');
+            const upiIdLink = document.getElementById('upi-id-link'); // Changed from upiIdDisplay
             const paymentAmount = document.getElementById('payment-amount');
             const upiPayLink = document.getElementById('upi-pay-link');
 
@@ -314,7 +316,8 @@
                 const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&tn=${encodeURIComponent(transactionNote)}&am=${totalAmount.toFixed(2)}&cu=INR`;
 
                 // Update UPI details in the confirmation modal
-                upiIdDisplay.textContent = upiId;
+                upiIdLink.textContent = upiId; // Update the text content of the link
+                upiIdLink.href = upiLink;    // Set the href for the UPI ID link
                 paymentAmount.textContent = `₹${totalAmount.toFixed(2)}`;
                 upiPayLink.href = upiLink;
 
