@@ -506,6 +506,111 @@
         .hidden {
             display: none;
         }
+
+        /* Interactive Section Styles (Removed) */
+        /*
+        .interactive-section {
+            max-width: 80rem;
+            margin: 2rem auto;
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .interactive-section {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 2rem;
+            }
+        }
+
+        .main-image-container {
+            flex: 2;
+            min-width: 50%;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .main-display-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.75rem;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+
+        .fade-in {
+            opacity: 1;
+        }
+
+        .options-container {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            justify-content: center;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .options-container {
+                flex-direction: column;
+                gap: 0.75rem;
+                width: auto;
+            }
+        }
+
+        .option-card {
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+            flex-grow: 1;
+        }
+
+        .option-card:hover {
+            background-color: #e5e7eb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-card.active {
+            background-color: #dbeafe;
+            border-color: #2563eb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .option-text {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .option-text {
+                font-size: 1rem;
+            }
+        }
+        */
     </style>
 </head>
 
@@ -515,7 +620,7 @@
     <header class="header-section">
         <div class="header-content-wrapper">
             <!-- Logo added here -->
-            <img src="LOGO.png" alt="Mandal Jhalmuriwala Logo" class="header-logo">
+            <img src="LOGO.jpg" alt="Mandal Jhalmuriwala Logo" class="header-logo">
             <h1 class="header-title">
                 Mandal Jhalmuriwala
             </h1>
@@ -589,7 +694,7 @@
                 
                 <!-- UPI ID as a clickable link -->
                 <p class="upi-id-text">
-                    UPI ID: <a id="upi-id-link" href="913422890900@ybl" class="text-blue-600 hover:underline">913422890900@ybl</a>
+                    UPI ID: <a id="upi-id-link" href="#" class="text-blue-600 hover:underline">913422890900@ybl</a>
                 </p>
                 
                 <!-- Payment Amount -->
@@ -597,7 +702,7 @@
             </div>
 
             <div class="modal-buttons">
-                <a id="upi-pay-link" href="913422890900@ybl"
+                <a id="upi-pay-link" href="#"
                     class="modal-button pay-now-button">
                     Pay Now with UPI App
                 </a>
@@ -816,13 +921,13 @@
             // Checkout process - now includes UPI payment details
             checkoutButton.addEventListener('click', () => {
                 const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                const upiId = "mandaljhalmuriwala@upi"; // Replace with your actual UPI ID
+                const upiId = "913422890900@ybl"; // Updated UPI ID
                 const merchantName = "Mandal Jhalmuriwala";
                 const transactionNote = "Order from Mandal Jhalmuriwala";
                 const transactionRef = "ORDER" + Date.now(); // Simple unique reference
 
                 // Construct UPI deep link
-                const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&tn=${encodeURIComponent(transactionNote)}%20${transactionRef}&am=${totalAmount.toFixed(2)}&cu=INR`;
+                const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&tn=${encodeURIComponent(transactionNote)}%20${transactionRef}&am=${totalAmount.toFixed(2)}&cu=INR`;
 
                 // Update UPI details in the confirmation modal
                 upiIdLink.textContent = upiId; // Update the text content of the link
@@ -831,8 +936,8 @@
                 upiPayLink.href = upiLink;
 
                 // For QR code: In a real app, you'd use a QR code generation API here.
-                // Using a generic placeholder for now to ensure functionality without external dependency
-                upiQrCode.src = `https://placehold.co/200x200/000000/FFFFFF?text=Scan+to+Pay%0A%E2%82%B9${totalAmount.toFixed(2)}`;
+                // Using the provided Qr.jpeg
+                upiQrCode.src = "Qr.jpeg";
 
 
                 cartModalOverlay.classList.add('hidden'); // Hide cart modal
